@@ -8,29 +8,29 @@ public class Main {
         scanner.nextLine();
         String paddles = scanner.nextLine();
 
-        String result = remove(paddles);
-        System.out.println(result.length());
+        System.out.println(validPaddles(paddles));
     }
-    public static String remove(String paddles){
-        int firstIndex = paddles.indexOf('>');
-        int lastIndex = paddles.lastIndexOf('<');
+    public static int validPaddles(String paddles) {
+        int firstIndex = paddles.indexOf(">");
+        int lastIndex = paddles.lastIndexOf("<");
 
-        if (firstIndex == -1 || lastIndex == -1){
-            return paddles;
+        if (firstIndex == -1 || lastIndex == -1) {
+            return paddles.length();
+        }
+
+        if (firstIndex > lastIndex){
+            return paddles.length();
         }
 
         String subString = "";
         for (int i = 0;i < paddles.length();i++){
-            String current = "" + paddles.charAt(i);
+            String currentChar = "" + paddles.charAt(i);
 
-            boolean condition = i == firstIndex || i == lastIndex;
-            if(!condition){
-                subString += current;
+            if (i >= firstIndex && i <= lastIndex){
+                continue;
             }
+            subString += currentChar;
         }
-        if (subString.indexOf('>') == -1 || subString.lastIndexOf('<') == -1){
-            return subString;
-        }
-        return remove(subString);
+        return validPaddles(subString);
     }
 }
